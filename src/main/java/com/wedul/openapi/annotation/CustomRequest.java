@@ -11,8 +11,8 @@ public class CustomRequest {
     @CustomSchemeAnnotation(description = "custom annotation age", example = "10", format = "int")
     private int age;
 
-    @CustomSchemeAnnotation(description = "list of classes", example = "[\"classA\", \"classB\"]", format = "array of string")
-    private List<String> classes;
+    @CustomSchemeAnnotation(description = "list of string", example = "[\"classA\", \"classB\"]", format = "array of string")
+    private List<String> stringList;
 
     @CustomSchemeAnnotation(description = "data list example", example = "{\"fieldName\":\"exampleField\"}", format = "array of Data")
     private Data data;

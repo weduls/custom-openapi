@@ -59,7 +59,7 @@ public class MethodCustomizer implements OpenApiCustomizer {
             operation.setRequestBody(requestBody);
             operation.setResponses(new ApiResponses().addApiResponse("200", apiResResponse));
 
-            PathItem pathItem = new PathItem().options(operation);
+            PathItem pathItem = new PathItem().get(operation);
             openApi.path(annotatedMethod.getName(), pathItem);
         }
     }
@@ -77,15 +77,10 @@ public class MethodCustomizer implements OpenApiCustomizer {
             CustomSchemeAnnotation fieldAnnotation = field.getAnnotation(CustomSchemeAnnotation.class);
             if (fieldAnnotation != null) {
                 Schema<?> fieldSchema = resolveFieldSchema(field.getGenericType(), fieldAnnotation, openApi);
-                String fieldName = field.getName();
-                if ("class".equals(fieldName)) fieldName = "_class";
-                schema.addProperties(fieldName, fieldSchema);
+                schema.addProperties(field.getName(), fieldSchema);
             }
         }
-
-        // ✅ 등록
         openApi.getComponents().addSchemas(clazz.getSimpleName(), schema);
-
         return schema;
     }
 
@@ -106,7 +101,6 @@ public class MethodCustomizer implements OpenApiCustomizer {
             Class<?> clazz = (Class<?>) type;
             schema = PrimitiveType.createProperty(clazz);
             if (schema == null) {
-                // ✅ nested class도 스키마 등록 처리
                 buildSchemaFromCustomAnnotation(clazz, openApi);
                 schema = new Schema<>().$ref("#/components/schemas/" + clazz.getSimpleName());
             }
