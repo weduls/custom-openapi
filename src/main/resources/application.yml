@@ -1,0 +1,13 @@
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    tagsSorter: alpha
+    operations-sorter: alpha
+    display-request-duration: true
+    groups-order: asc
+  cache:
+    disabled: false
