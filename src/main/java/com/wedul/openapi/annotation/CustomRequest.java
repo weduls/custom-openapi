@@ -1,6 +1,7 @@
 package com.wedul.openapi.annotation;
 
 import java.util.List;
+import java.util.Map;
 
 @CustomSchemeAnnotation(description = "custom request class")
 public class CustomRequest {
@@ -22,5 +23,8 @@ public class CustomRequest {
 
     @CustomSchemeAnnotation(description = "generic data wrapper", example = "{\"value\":{\"fieldName\":\"nestedField\"}}", format = "GenericWrapper<Data>")
     private GenericWrapper<Data> wrappedData;
+
+    @CustomSchemeAnnotation(description = "metadata map", example = "{\"key1\": 1, \"key2\": 2}", format = "Map<String, Integer>")
+    private Map<String, Integer> metadata;
 
 }

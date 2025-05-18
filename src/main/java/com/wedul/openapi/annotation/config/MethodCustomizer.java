@@ -17,6 +17,7 @@ import org.springdoc.core.customizers.OpenApiCustomizer;
 
 import java.lang.reflect.*;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class MethodCustomizer implements OpenApiCustomizer {
@@ -92,7 +93,12 @@ public class MethodCustomizer implements OpenApiCustomizer {
             Type raw = pt.getRawType();
             Type actual = pt.getActualTypeArguments()[0];
 
-            if (raw == List.class || raw == Set.class) {
+            if (raw == Map.class) {
+                Type valueType = pt.getActualTypeArguments()[1];
+                Schema<?> valueSchema = resolveFieldSchema(valueType, annotation, openApi);
+
+                schema = new MapSchema().additionalProperties(valueSchema);
+            } else if (raw == List.class || raw == Set.class) {
                 schema = new ArraySchema().items(resolveFieldSchema(actual, annotation, openApi));
             } else {
                 schema = resolveFieldSchema(actual, annotation, openApi);
