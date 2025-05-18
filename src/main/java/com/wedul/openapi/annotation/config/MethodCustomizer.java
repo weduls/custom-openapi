@@ -64,7 +64,7 @@ public class MethodCustomizer implements OpenApiCustomizer {
         }
     }
 
-    public static Schema<?> buildSchemaFromCustomAnnotation(Class<?> clazz, OpenAPI openApi) {
+    public Schema<?> buildSchemaFromCustomAnnotation(Class<?> clazz, OpenAPI openApi) {
         Schema<?> schema = new ObjectSchema();
 
         CustomSchemeAnnotation classAnnotation = clazz.getAnnotation(CustomSchemeAnnotation.class);
@@ -84,7 +84,7 @@ public class MethodCustomizer implements OpenApiCustomizer {
         return schema;
     }
 
-    private static Schema<?> resolveFieldSchema(Type type, CustomSchemeAnnotation annotation, OpenAPI openApi) {
+    private Schema<?> resolveFieldSchema(Type type, CustomSchemeAnnotation annotation, OpenAPI openApi) {
         Schema<?> schema;
 
         if (type instanceof ParameterizedType) {
@@ -112,7 +112,7 @@ public class MethodCustomizer implements OpenApiCustomizer {
         return schema;
     }
 
-    private static void applyCustomAnnotationToSchema(Schema<?> schema, CustomSchemeAnnotation ann) {
+    private void applyCustomAnnotationToSchema(Schema<?> schema, CustomSchemeAnnotation ann) {
         if (!ann.description().isEmpty()) schema.setDescription(ann.description());
         if (!ann.example().isEmpty()) schema.setExample(ann.example());
         if (!ann.format().isEmpty()) schema.setFormat(ann.format());
